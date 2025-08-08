@@ -1,0 +1,47 @@
+/* index.css */
+
+:root {
+  /* ==== Typography ==== */
+  --font-primary: 'Poppins', sans-serif;
+
+  /* ==== Color Palette ==== */
+  --color-primary: #4CAF50;       /* Herbal Green */
+  --color-secondary: #FF9800;     /* Ayurvedic Orange */
+  --color-accent: #673AB7;        /* Spiritual Purple */
+  --color-light-bg: #F9F9F9;      /* Light Gray Background */
+  --color-dark-bg: #1e1e1e;       /* Dark Background for footer etc */
+  --color-text: #333333;          /* Default text color */
+  --color-muted: #777777;         /* For subtitles, less emphasis */
+  --color-border: #e0e0e0;        /* Subtle borders */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* ==== Shadow and Border Radius ==== */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 4px 14px rgba(0, 0, 0, 0.1);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 2rem;
+
+  /* ==== Spacing ==== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+
+  /* ==== Transition ==== */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.4s ease;
+  --transition-slow: 0.6s ease;
+}
+
+/* Apply base styles */
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-light-bg);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
