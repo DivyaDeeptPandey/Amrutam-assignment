@@ -22,7 +22,7 @@ const TrendingOffers = () => {
 
   return (
     <section className={styles.trendingOffers}>
-      <h2 className={styles.heading}>🔥 Trending Offers</h2>
+      <h2 className={styles.heading}>Trending Offers</h2>
       <div className={styles.grid}>
         {offers.map(offer => (
           <OfferCard key={offer.slug} offer={offer} />

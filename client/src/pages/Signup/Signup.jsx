@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import styles from './Signup.module.css';
+import Button from '../../components/Button/Button';
 import { motion } from 'framer-motion';
 
 const Signup = () => {
@@ -69,7 +70,7 @@ const Signup = () => {
           <label>Password</label>
           <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
 
-          <button type="submit">Sign Up</button>
+          <Button type="submit" variant="primary">Sign Up</Button>
         </form>
       </motion.div>
     </motion.div>

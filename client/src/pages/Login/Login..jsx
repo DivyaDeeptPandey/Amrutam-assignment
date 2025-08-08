@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import styles from "./Login.module.css";
+import Button from "../../components/Button/Button.jsx";
 
 const Login = () => {
   const [email, setEmail]       = useState("");
@@ -42,7 +43,7 @@ const Login = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <h2 className={styles.title}>Welcome Back 👋</h2>
+        <h2 className={styles.title}>Welcome Back!</h2>
         <p className={styles.subtitle}>Please login to continue</p>
 
         {error && <div className={styles.error}>{error}</div>}
@@ -66,7 +67,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit">Login</button>
+          <Button type="submit" variant="primary">Login</Button>
         </form>
 
         <p className={styles.footer}>
