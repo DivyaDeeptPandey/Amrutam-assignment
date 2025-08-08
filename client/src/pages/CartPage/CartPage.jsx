@@ -1,74 +1,88 @@
-// client/pages/CartPage.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './CartPage.module.css';
-import { useCart } from '../../context/CartContext.jsx';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import Navbar from '../../components/NavBar/NavBar';
+import Footer from '../../components/Footer/Footer';
+import Button from '../../components/Button/Button';
+import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 
 const CartPage = () => {
-  const {
-    cartItems,
-    removeFromCart,
-    updateQuantity,
-    getTotal,
-    clearCart,
-  } = useCart();
+  const { isAuthenticated } = useAuth();
+  const { cart, loading, addToCart, removeFromCart, clearCart } = useCart();
+  const navigate = useNavigate();
 
-  if (cartItems.length === 0) {
-    return (
-      <motion.div
-        className={styles.emptyCart}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
-        <h2>Your Cart is Empty 🛒</h2>
-        <Link to="/">Go Shopping</Link>
-      </motion.div>
-    );
+  if (!isAuthenticated) {
+    navigate('/login');
+    return null;
   }
 
+  if (loading) {
+    return <div className={styles.loading}>Loading cart...</div>;
+  }
+
+  const products = cart.products?.filter(
+  (item) => item.productId && typeof item.productId === 'object'
+);
+  const total = products.reduce(
+    (sum, item) => sum + item.productId.price * item.quantity,
+    0
+  );
+
   return (
-    <motion.div
-      className={styles.cartPage}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-    >
-      <h1>Your Cart</h1>
+    <>
+      <Navbar />
+      <div className={styles.container}>
+        <h1>Your Cart</h1>
 
-      <div className={styles.cartItems}>
-        {cartItems.map((item) => (
-          <motion.div
-            key={item._id}
-            className={styles.cartItem}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-          >
-            <img src={item.image} alt={item.name} />
-            <div className={styles.details}>
-              <h3>{item.name}</h3>
-              <p>₹{item.price}</p>
-              <div className={styles.quantity}>
-                <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>-</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>+</button>
+        {products.length === 0 ? (
+          <div className={styles.empty}>Your cart is empty.</div>
+        ) : (
+          <>
+            <ul className={styles.list}>
+              {products.map(({ productId, quantity }, index) => (
+                <li key={productId?._id || index} className={styles.item}>
+                  <img
+                    src={productId.imageUrl}
+                    alt={productId.title}
+                    className={styles.thumb}
+                  />
+                  <div className={styles.info}>
+                    <h2>{productId.title}</h2>
+                    <p>₹{productId.price}</p>
+                    <div className={styles.qtyControls}>
+                      <Button
+                        text="−"
+                        onClick={() => removeFromCart(productId._id)}
+                      />
+                      <span>{quantity}</span>
+                      <Button
+                        text="+"
+                        onClick={() => addToCart(productId)}
+                      />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <div className={styles.summary}>
+              <p>
+                Total: <strong>₹{total.toFixed(2)}</strong>
+              </p>
+              <div className={styles.actions}>
+                <Button text="Clear Cart" onClick={clearCart} />
+                <Button
+                  text="Proceed to Checkout"
+                  onClick={() => navigate('/checkout')}
+                />
               </div>
-              <button
-                className={styles.removeBtn}
-                onClick={() => removeFromCart(item._id)}
-              >
-                Remove
-              </button>
             </div>
-          </motion.div>
-        ))}
+          </>
+        )}
       </div>
-
-      <div className={styles.summary}>
-        <h2>Total: ₹{getTotal()}</h2>
-        <button className={styles.clearBtn} onClick={clearCart}>Clear Cart</button>
-        <button className={styles.checkoutBtn}>Proceed to Checkout</button>
-      </div>
-    </motion.div>
+      <Footer />
+    </>
   );
 };
 

@@ -1,20 +1,28 @@
 /* index.css */
 
+/* Load Poppins font (weights 300–700). If you already import it in HTML, you can remove this line. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 :root {
   /* ==== Typography ==== */
   --font-primary: 'Poppins', sans-serif;
 
-  /* ==== Color Palette ==== */
-  --color-primary: #4CAF50;       /* Herbal Green */
-  --color-secondary: #FF9800;     /* Ayurvedic Orange */
-  --color-accent: #673AB7;        /* Spiritual Purple */
-  --color-light-bg: #F9F9F9;      /* Light Gray Background */
-  --color-dark-bg: #1e1e1e;       /* Dark Background for footer etc */
-  --color-text: #333333;          /* Default text color */
-  --color-muted: #777777;         /* For subtitles, less emphasis */
-  --color-border: #e0e0e0;        /* Subtle borders */
+  /* ==== Color Palette (Updated Theme) ==== */
+  --color-primary: #f57f3f;       /* Primary (Brand Orange) */
+  --color-secondary: #465C88;     /* Secondary (Indigo) */
+  --color-accent: #E9E3DF;        /* Accent / Surface (Soft Beige) */
+  --color-light-bg: #E9E3DF;      /* Light Background */
+  --color-dark-bg: #000000;       /* Dark Background */
+  --color-text: #000000;          /* Default text color */
+  --color-muted: #6B7280;         /* Subtle text (neutral gray for readability) */
+  --color-border: #d4c3b5;        /* Subtle borders (tint of accent) */
   --color-white: #ffffff;
   --color-black: #000000;
+
+  /* Optional contrast helpers */
+  --on-primary: #ffffff;
+  --on-secondary: #ffffff;
+  --on-accent: #000000;
 
   /* ==== Shadow and Border Radius ==== */
   --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -36,12 +44,135 @@
   --transition-slow: 0.6s ease;
 }
 
-/* Apply base styles */
+/* ==== Base / Reset-ish ==== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: var(--font-primary);
   background-color: var(--color-light-bg);
   color: var(--color-text);
-  margin: 0;
-  padding: 0;
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Headings inherit brand tone naturally via color-text; adjust if needed */
+/* h1, h2, h3, h4, h5, h6 { color: var(--color-black); } */
+
+/* Links */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover,
+a:focus-visible {
+  text-decoration: underline;
+}
+
+/* Form controls and buttons inherit font */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Text selection */
+::selection {
+  background: var(--color-primary);
+  color: var(--on-primary);
+}
+
+/* Subtle default borders */
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: var(--spacing-lg) 0;
+}
+
+/* Basic container utility (optional) */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: var(--spacing-md);
+}
+
+/* Card surface (optional) */
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: var(--spacing-lg);
+}
+
+/* Buttons (optional, lightweight defaults) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: var(--color-accent);
+  color: var(--on-accent);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+.btn:hover {
+  filter: brightness(0.98);
+}
+.btn:active {
+  transform: translateY(0.5px);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--on-primary);
+}
+.btn-primary:hover {
+  filter: brightness(0.97);
+}
+
+.btn-secondary {
+  background: var(--color-secondary);
+  color: var(--on-secondary);
+}
+.btn-secondary:hover {
+  filter: brightness(0.97);
+}
+
+/* Muted text helper */
+.text-muted {
+  color: var(--color-muted);
+}
+
+/* Surface helpers */
+.bg-white { background: var(--color-white); }
+.bg-accent { background: var(--color-accent); }
+.bg-dark { background: var(--color-dark-bg); color: var(--color-white); }
+
+/* Border helpers */
+.border { border: 1px solid var(--color-border); }
+.border-top { border-top: 1px solid var(--color-border); }
+.border-bottom { border-bottom: 1px solid var(--color-border); }

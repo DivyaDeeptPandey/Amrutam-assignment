@@ -12,7 +12,7 @@ const OfferCard = ({ offer }) => {
     >
       <Link to={offer.link} className={styles.link}>
         <img
-          src={`/images/offers/${offer.image}`}
+          src={`/images/${offer.image}`}
           alt={offer.title}
           className={styles.image}
         />

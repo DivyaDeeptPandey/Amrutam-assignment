@@ -8,6 +8,8 @@ import Login from './pages/Login/Login.';
 import Signup from './pages/Signup/Signup';
 import Checkout from './pages/Checkout/Checkout';
 import OrderSuccess from './pages/OrderSuccess/OrderSuccess';
+import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
+import EditProfilePage from './pages/EditProfilePage/EditProfilePage';
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-success" element={<OrderSuccess />} />
+        <Route path="/profile" element={<UserProfilePage />} />
+        <Route path="/edit-profile" element={<EditProfilePage />} />
 
         {/* other routes */}
       </Routes>

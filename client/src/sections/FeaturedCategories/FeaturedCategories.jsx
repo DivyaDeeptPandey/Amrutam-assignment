@@ -1,8 +1,10 @@
 // client/src/sections/FeaturedCategories/FeaturedCategories.jsx
 import styles from './FeaturedCategories.module.css';
 import CategoryCard from '../../components/CategoryCard/CategoryCard.jsx';
-import hairCareImage from '../../assets/categories/haircare.webp';
-
+import hairCareImage from '../../assets/categories/haircare.png';
+import skinCareImage from '../../assets/categories/skincare.png';
+import healthcareAndWellnessImage from '../../assets/categories/heathcareAndWellness.png';
+import personalHygieneImage from '../../assets/categories/personalHygiene.png';
 const categories = [
   {
     title: 'Hair Care',
@@ -11,17 +13,17 @@ const categories = [
   },
   {
     title: 'Skin Care',
-    imageUrl: '/assets/categories/haircare.webp',
+    imageUrl: skinCareImage,
     link: '/category/skin-care',
   },
   {
     title: 'Health & Wellness',
-    imageUrl: '/assets/categories/haircare.webp',
+    imageUrl: healthcareAndWellnessImage,
     link: '/category/health-wellness',
   },
   {
     title: 'Personal Hygiene',
-    imageUrl: '/assets/categories/haircare.webp',
+    imageUrl: personalHygieneImage,
     link: '/category/personal-hygiene',
   },
 ];

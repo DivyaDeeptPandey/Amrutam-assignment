@@ -35,53 +35,60 @@ const ProductListing = () => {
     if (category === '') {
       setFilteredProducts(products);
     } else {
-      const filtered = products.filter((product) => product.category === category);
+      const filtered = products.filter((product) => product.category.toLowerCase() === category.toLowerCase());
       setFilteredProducts(filtered);
     }
   };
 
   // Handle sort
-  const handleSortChange = (e) => {
-    const option = e.target.value;
-    setSortOption(option);
+  const applyFiltersAndSort = (category, sort) => {
+  let updated = [...products];
 
-    const sorted = [...filteredProducts].sort((a, b) => {
-      switch (option) {
+  if (category) {
+    updated = updated.filter((product) => product.category === category);
+  }
+
+  if (sort) {
+    updated.sort((a, b) => {
+      switch (sort) {
         case 'priceLowHigh':
           return a.price - b.price;
         case 'priceHighLow':
           return b.price - a.price;
         case 'nameAZ':
-          return a.name.localeCompare(b.name);
+          return a.title.localeCompare(b.title);
         case 'nameZA':
-          return b.name.localeCompare(a.name);
+          return b.title.localeCompare(a.title);
         default:
           return 0;
       }
     });
+  }
 
-    setFilteredProducts(sorted);
-  };
+  setFilteredProducts(updated);
+};
+const handleSortChange = (e) => {
+  const sort = e.target.value;
+  setSortOption(sort);
+  applyFiltersAndSort(categoryFilter, sort);
+};
 
   return (
+    <>
+    <Navbar />
     <motion.div
-      // Mismatch Fix 1: Use 'container' instead of 'pageContainer'
       className={styles.container} 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-        <Navbar />
       <SearchBar />
-
-      {/* Mismatch Fix 2: Use 'topBar' instead of 'controls' */}
       <div className={styles.topBar}> 
         <select value={categoryFilter} onChange={handleCategoryChange} className={styles.dropdown}>
           <option value="">All Categories</option>
           <option value="Oils">Oils</option>
           <option value="Capsules">Capsules</option>
           <option value="Syrups">Syrups</option>
-          {/* Add more categories if needed */}
         </select>
 
         <select value={sortOption} onChange={handleSortChange} className={styles.dropdown}>
@@ -105,8 +112,10 @@ const ProductListing = () => {
           </motion.div>
         ))}
       </div>
-        <Footer />
     </motion.div>
+    <Footer />
+    </>
+    
   );
 };
 

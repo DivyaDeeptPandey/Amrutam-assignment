@@ -2,23 +2,27 @@
 import Cart from '../models/Cart.js';
 
 // Create or update cart
+// Create or update cart
 export const createOrUpdateCart = async (req, res) => {
+  console.log("USer->>>> ",req.user)
   const userId = req.user.id;
   const { products } = req.body;
-
+  console.log('Creating or updating cart for user:', userId, 'with products:', products);
 
   try {
-    const existingCart = await Cart.findOne({ userId });
+    let cart = await Cart.findOne({ userId });
 
-    if (existingCart) {
-      existingCart.products = products;
-      const updatedCart = await existingCart.save();
-      res.status(200).json(updatedCart);
+    if (cart) {
+      cart.products = products;
+      await cart.save();
     } else {
-      const newCart = new Cart({ userId, products });
-      const savedCart = await newCart.save();
-      res.status(201).json(savedCart);
+      console.log('Creating new cart for user:', userId);
+      cart = new Cart({ userId, products });
+      await cart.save();
     }
+
+    const populatedCart = await Cart.findOne({ userId }).populate('products.productId');
+    res.status(200).json(populatedCart);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }

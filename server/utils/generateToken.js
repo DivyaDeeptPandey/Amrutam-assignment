@@ -1,10 +1,11 @@
 // server/utils/generateToken.js
 import jwt from 'jsonwebtoken';
 
-const generateToken = (userId) => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-    expiresIn: '7d',
-  });
-};
+const JWT_SECRET = process.env.JWT_SECRET || 'change_me';
+const JWT_EXPIRES_IN = '7d';
 
-export default generateToken;
+export default function generateToken(userId) {
+  return jwt.sign({ id: userId }, JWT_SECRET, {
+    expiresIn: JWT_EXPIRES_IN
+  });
+}

@@ -1,69 +1,155 @@
-// client/context/CartContext.jsx
-import { createContext, useContext, useEffect, useState } from 'react';
+// client/src/context/CartContext.jsx
 
-// Create the context
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useAuth } from './AuthContext';
+
 const CartContext = createContext();
 
-// Custom hook to use the cart
 export const useCart = () => useContext(CartContext);
 
-// Cart Provider component
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState(() => {
-    const storedCart = localStorage.getItem('cart');
-    return storedCart ? JSON.parse(storedCart) : [];
-  });
+  const { user } = useAuth();
+  const [cart, setCart] = useState({ products: [] });
+  const [loading, setLoading] = useState(false);
 
-  // Persist cart in localStorage
+  // Fetch existing cart when user logs in or changes
+  const fetchCart = async () => {
+    if (!user) return;
+    setLoading(true);
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/cart/${user._id}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      if (!res.ok) throw new Error('Failed to fetch cart');
+      const data = await res.json();
+      setCart(data);
+    } catch (err) {
+      console.error('Error fetching cart', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
-  }, [cartItems]);
+    fetchCart();
+  }, [user]);
 
-  // Add item to cart
-  const addToCart = (product) => {
-    setCartItems((prev) => {
-      const exists = prev.find((item) => item._id === product._id);
-      if (exists) {
-        return prev.map((item) =>
-          item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...prev, { ...product, quantity: 1 }];
-      }
-    });
-  };
+  // Add or increment an item in cart
+  const addToCart = async (product) => {
+    console.log('addToCart called with:', product);
+    console.log('current user is:', user);
+    if (!user) {
+      console.warn('🏃 early exit: no user, skipping network call');
+      return;
+    }
 
-  // Remove item from cart
-  const removeFromCart = (productId) => {
-    setCartItems((prev) => prev.filter((item) => item._id !== productId));
-  };
 
-  // Update item quantity
-  const updateQuantity = (productId, quantity) => {
-    if (quantity < 1) return;
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item._id === productId ? { ...item, quantity } : item
-      )
+    const existingIndex = cart.products.findIndex(
+      (p) => p.productId._id === product._id
     );
+
+    let newProducts;
+    if (existingIndex !== -1) {
+      newProducts = cart.products.map((p, i) =>
+        i === existingIndex
+          ? { ...p, quantity: p.quantity + 1 }
+          : p
+      );
+    } else {
+      newProducts = [
+        ...cart.products,
+        { productId: product._id, quantity: 1 }
+      ];
+    }
+
+    // Optimistic UI update
+    setCart({ products: newProducts });
+
+    // Persist to server
+    try {
+      const res = await fetch(`http://localhost:5000/api/cart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ products: newProducts })
+      });
+      if (!res.ok) throw new Error('Failed to update cart on server');
+    } catch (err) {
+      console.error('Failed to update cart on server', err);
+      fetchCart(); // Reconcile state
+    }
+  };
+
+  // Decrement quantity or remove item
+  const removeFromCart = async (productId) => {
+    if (!user) return;
+
+    const newProducts = cart.products
+      .map((p) =>
+        p.productId._id === productId
+          ? { ...p, quantity: p.quantity - 1 }
+          : p
+      )
+      .filter((p) => p.quantity > 0);
+
+    setCart({ products: newProducts });
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/cart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ products: newProducts })
+      });
+      if (!res.ok) throw new Error('Failed to update cart on server');
+      await fetchCart(); 
+    } catch (err) {
+      console.error('Failed to update cart on server', err);
+      fetchCart();
+    }
   };
 
   // Clear entire cart
-  const clearCart = () => setCartItems([]);
+  const clearCart = async () => {
+    if (!user) return;
 
-  // Calculate total
-  const getTotal = () =>
-    cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    setCart({ products: [] });
+
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/cart/${user._id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
+      if (!res.ok) throw new Error('Failed to clear cart on server');
+    } catch (err) {
+      console.error('Failed to clear cart on server', err);
+      fetchCart();
+    }
+  };
 
   return (
     <CartContext.Provider
       value={{
-        cartItems,
+        cart,
+        loading,
         addToCart,
         removeFromCart,
-        updateQuantity,
         clearCart,
-        getTotal,
+        fetchCart,
+        refreshCart: fetchCart
       }}
     >
       {children}

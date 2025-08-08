@@ -1,7 +1,7 @@
 /* src/components/Footer/Footer.module.css */
 
 .footer {
-  background-color: var(--color-bg-secondary);
+  background-color: var(--color-primary);
   color: var(--color-text-primary);
   padding: 4rem 2rem 2rem;
 }

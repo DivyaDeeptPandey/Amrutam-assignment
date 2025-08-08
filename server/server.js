@@ -7,9 +7,10 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
-//import userRoutes from './routes/userRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import offerRoutes from './routes/offerRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+
 
 dotenv.config();
 connectDB(); // MongoDB connection
@@ -24,9 +25,11 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
-//app.use('/api/users', userRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/offers', offerRoutes);
+app.use('/api/users', userRoutes);
+
+
 
 // Default route
 app.get('/', (req, res) => {

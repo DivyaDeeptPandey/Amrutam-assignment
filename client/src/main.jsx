@@ -8,15 +8,15 @@ import { AuthProvider } from './context/AuthContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
       <AuthProvider>
+    <BrowserRouter>
         <CartProvider>
 
           <App />
 
         </CartProvider>
 
-      </AuthProvider>
     </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 )

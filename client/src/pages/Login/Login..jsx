@@ -1,15 +1,32 @@
-import React, { useState } from "react";
-import styles from "./Login.module.css";
+// src/pages/Login.js
+import React, { useState, useContext, use } from "react";
 import { motion } from "framer-motion";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
+import styles from "./Login.module.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError]       = useState("");
+  const { login }               = useAuth();
 
-  const handleLogin = (e) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Where to go after login
+  const from = location.state?.from?.pathname || "/";
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Logging in with:", email, password);
-    // Add actual login logic here
+    setError("");
+    try {
+      await login(email, password);
+      // push user back to page they tried to visit
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed");
+    }
   };
 
   return (
@@ -27,6 +44,8 @@ const Login = () => {
       >
         <h2 className={styles.title}>Welcome Back 👋</h2>
         <p className={styles.subtitle}>Please login to continue</p>
+
+        {error && <div className={styles.error}>{error}</div>}
 
         <form className={styles.form} onSubmit={handleLogin}>
           <label>Email</label>
@@ -51,7 +70,7 @@ const Login = () => {
         </form>
 
         <p className={styles.footer}>
-          Don’t have an account? <a href="/signup">Sign up</a>
+          Don’t have an account? <Link to="/signup">Sign up</Link>
         </p>
       </motion.div>
     </motion.div>

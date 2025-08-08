@@ -2,8 +2,10 @@ import React from 'react';
 import styles from './Checkout.module.css';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/NavBar/NavBar.jsx';
+import Footer from '../../components/Footer/Footer.jsx';
+import Button from '../../components/Button/Button.jsx';
 
-// Calculate total from cart items
 const calculateTotal = (cart) => {
   return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 };
@@ -12,7 +14,7 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   const handlePlaceOrder = async (e) => {
-    e.preventDefault(); // Prevent form reload
+    e.preventDefault();
 
     try {
       const token = localStorage.getItem('token');
@@ -41,7 +43,6 @@ const Checkout = () => {
       }
 
       const data = await response.json();
-
       localStorage.removeItem('cart');
       navigate('/order-success', { state: { order: data } });
 
@@ -52,55 +53,56 @@ const Checkout = () => {
   };
 
   return (
-    <motion.div
-      className={styles.checkoutWrapper}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      <h2 className={styles.title}>Checkout</h2>
+    <>
+      <Navbar />
 
-      <form className={styles.form} onSubmit={handlePlaceOrder}>
-        <div className={styles.inputGroup}>
-          <label htmlFor="fullName">Full Name</label>
-          <input type="text" id="fullName" placeholder="John Doe" required />
-        </div>
-
-        <div className={styles.inputGroup}>
-          <label htmlFor="address">Shipping Address</label>
-          <textarea
-            id="address"
-            rows="3"
-            placeholder="123 Main Street, City, ZIP"
-            required
-          ></textarea>
-        </div>
-
-        <div className={styles.inputGroup}>
-          <label htmlFor="phone">Phone Number</label>
-          <input type="tel" id="phone" placeholder="+91 XXXXXXXXXX" required />
-        </div>
-
-        <div className={styles.inputGroup}>
-          <label htmlFor="payment">Payment Method</label>
-          <select id="payment" required>
-            <option value="">Select Method</option>
-            <option value="cod">Cash on Delivery</option>
-            <option value="card">Credit/Debit Card</option>
-            <option value="upi">UPI</option>
-          </select>
-        </div>
-
-        <motion.button
-          whileTap={{ scale: 0.95 }}
-          whileHover={{ scale: 1.03 }}
-          className={styles.button}
-          type="submit"
+      <div className={styles.pageWrapper}>
+        <motion.div
+          className={styles.checkoutCard}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
         >
-          Place Order
-        </motion.button>
-      </form>
-    </motion.div>
+          <h2 className={styles.title}>Checkout</h2>
+
+          <form className={styles.form} onSubmit={handlePlaceOrder}>
+            <div className={styles.inputGroup}>
+              <label htmlFor="fullName">Full Name</label>
+              <input type="text" id="fullName" placeholder="John Doe" required />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="address">Shipping Address</label>
+              <textarea
+                id="address"
+                rows="3"
+                placeholder="123 Main Street, City, ZIP"
+                required
+              ></textarea>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="+91 XXXXXXXXXX" required />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="payment">Payment Method</label>
+              <select id="payment" required>
+                <option value="">Select Method</option>
+                <option value="cod">Cash on Delivery</option>
+                <option value="card">Credit/Debit Card</option>
+                <option value="upi">UPI</option>
+              </select>
+            </div>
+
+            <Button type="submit" label="Place Order" text="Check Out"/>
+          </form>
+        </motion.div>
+      </div>
+
+      <Footer />
+    </>
   );
 };
 
