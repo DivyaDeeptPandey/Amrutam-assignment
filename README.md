@@ -32,8 +32,8 @@ client/
       ├── pages/         # Login, Signup, ProductListing, Profile, etc.
       ├── components/    # Navbar, Footer, ProductCard, etc.
       ├── context/       # AuthContext
-      └── assets/
-      └── sections/        # Images and icons
+      └── assets/        # Images and icons
+      └── sections/      # Homepage Sections
 
 server/
   ├── models/            # User, Product, Order schemas
