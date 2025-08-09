@@ -38,6 +38,7 @@
   color: var(--color-primary);
   font-size: 1rem;
 }
+
 .dropdown {
   position: absolute;
   top: 105%;
@@ -67,3 +68,9 @@
   background-color: var(--color-secondary);
 }
 
+/* Keyboard navigation active state */
+.activeItem {
+  background-color: var(--color-secondary);
+  color: var(--color-primary-dark);
+  font-weight: 500;
+}

@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  FaShoppingCart,
-  FaBars,
-  FaTimes
-} from 'react-icons/fa';
+import { FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import styles from './Navbar.module.css';
@@ -24,7 +20,6 @@ export default function Navbar() {
   const { cart, refreshCart } = useCart();
   const navigate = useNavigate();
 
-  // Close mobile menu on route change
   const handleNavClick = (to) => {
     setMenuOpen(false);
     navigate(to);
@@ -33,26 +28,20 @@ export default function Navbar() {
   return (
     <header className={styles.header}>
       <div className={styles.navbar}>
-
         {/* Logo */}
         <Link to="/" className={styles.logoLink} aria-label="Amrutam Home">
           Amrutam
         </Link>
 
-        {/* Desktop Nav */}
-        <nav
-          className={styles.desktopNav}
-          aria-label="Primary Navigation"
-        >
+        {/* Desktop Navigation */}
+        <nav className={styles.desktopNav} aria-label="Primary Navigation">
           <ul className={styles.navList}>
             {navItems.map(({ name, to }) => (
               <li key={name} className={styles.navItem}>
                 <NavLink
                   to={to}
                   className={({ isActive }) =>
-                    isActive
-                      ? `${styles.navLink} ${styles.active}`
-                      : styles.navLink
+                    `${styles.navLink} ${isActive ? styles.active : ''}`
                   }
                 >
                   {name}
@@ -62,14 +51,14 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        {/* Actions */}
+        {/* Action Buttons */}
         <div className={styles.actions}>
           {isAuthenticated && user ? (
             <>
               <Link
                 to="/profile"
                 className={styles.userName}
-                aria-label={`Go to ${user.name}’s profile`}
+                aria-label={`Go to ${user.name}'s profile`}
               >
                 Hello, {user.name}
               </Link>
@@ -102,15 +91,14 @@ export default function Navbar() {
           >
             <FaShoppingCart />
             {cart?.items?.length > 0 && (
-              <span className={styles.cartBadge}>
-                {cart.items.length}
-              </span>
+              <span className={styles.cartBadge}>{cart.items.length}</span>
             )}
           </button>
 
+          {/* Mobile menu toggle */}
           <button
             className={styles.menuToggle}
-            onClick={() => setMenuOpen((o) => !o)}
+            onClick={() => setMenuOpen((prev) => !prev)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
@@ -118,11 +106,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu + Overlay */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* backdrop overlay */}
+            {/* Overlay */}
             <motion.div
               className={styles.overlay}
               initial={{ opacity: 0 }}
@@ -131,7 +119,7 @@ export default function Navbar() {
               transition={{ duration: 0.2 }}
               onClick={() => setMenuOpen(false)}
             />
-
+            {/* Slide-in Menu */}
             <motion.nav
               className={styles.mobileMenu}
               initial={{ x: '100%' }}

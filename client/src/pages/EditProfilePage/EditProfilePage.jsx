@@ -30,7 +30,7 @@ const EditProfilePage = () => {
     setStatus('Saving...');
 
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${user._id}`, {
+      const res = await fetch(`http://localhost:5000/api/users/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

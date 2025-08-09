@@ -4,6 +4,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle animated background glow */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(0, 128, 0, 0.05), transparent 70%);
+  animation: floatBg 10s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes floatBg {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20px, 20px); }
 }
 
 .content {
@@ -14,6 +34,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .text {
@@ -22,14 +44,14 @@
 }
 
 .text h1 {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-family: var(--font-heading);
   margin-bottom: 1rem;
   color: var(--color-dark);
 }
 
 .text p {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   margin-bottom: 2rem;
   color: var(--color-text);
   font-family: var(--font-body);
@@ -46,4 +68,5 @@
   max-width: 100%;
   height: auto;
   border-radius: 1rem;
+  will-change: transform;
 }

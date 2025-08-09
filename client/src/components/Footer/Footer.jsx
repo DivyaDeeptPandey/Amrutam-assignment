@@ -1,49 +1,101 @@
-// src/components/Footer/Footer.jsx
+import { memo } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import styles from './Footer.module.css';
-import { motion } from 'framer-motion';
+
+const navColumns = [
+  {
+    title: 'Shop',
+    id: 'footer-shop',
+    links: [
+      { label: 'Products', href: '/products' },
+      { label: 'Offers', href: '/offers' },
+      { label: 'Bestsellers', href: '/bestsellers' },
+    ],
+  },
+  {
+    title: 'About Us',
+    id: 'footer-about',
+    links: [
+      { label: 'Our Story', href: '/our-story' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Careers', href: '/careers' },
+    ],
+  },
+];
+
+const socials = [
+  { name: 'Instagram', href: 'https://instagram.com/amrutam', iconClass: 'fa-brands fa-instagram' },
+  { name: 'Facebook', href: 'https://facebook.com/amrutam', iconClass: 'fa-brands fa-facebook' },
+  { name: 'X (Twitter)', href: 'https://twitter.com/amrutam', iconClass: 'fa-brands fa-x-twitter' },
+];
+
+const variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
 
 const Footer = () => {
+  const year = new Date().getFullYear();
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.footer
       className={styles.footer}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      variants={variants}
+      initial={reduceMotion ? 'visible' : 'hidden'}
+      whileInView="visible"
+      transition={reduceMotion ? undefined : { duration: 0.6, ease: 'easeOut' }}
+      viewport={{ once: true, amount: 0.2 }}
     >
       <div className={styles.container}>
+        {/* Logo */}
         <div className={styles.column}>
-          <h3 className={styles.logo}>Amrutam</h3>
+          <h2 className={styles.logo}>
+            <a href="/" aria-label="Amrutam Home">Amrutam</a>
+          </h2>
         </div>
+
+        {/* Navigation Columns */}
+        {navColumns.map(({ id, title, links }) => (
+          <nav key={id} className={styles.column} aria-labelledby={id}>
+            <h3 className={styles.columnTitle} id={id}>{title}</h3>
+            <ul className={styles.linkList}>
+              {links.map(({ label, href }) => (
+                <li key={label}>
+                  <a className={styles.link} href={href}>{label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+
+        {/* Social Links */}
         <div className={styles.column}>
-          <h4>Shop</h4>
-          <ul>
-            <li>Products</li>
-            <li>Offers</li>
-            <li>Bestsellers</li>
+          <h3 className={styles.columnTitle} id="footer-follow">Follow Us</h3>
+          <ul className={styles.socials} aria-labelledby="footer-follow">
+            {socials.map(({ name, href, iconClass }) => (
+              <li key={name}>
+                <a
+                  className={styles.socialLink}
+                  href={href}
+                  aria-label={name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i className={iconClass} aria-hidden="true"></i>
+                </a>
+              </li>
+            ))}
           </ul>
-        </div>
-        <div className={styles.column}>
-          <h4>About Us</h4>
-          <ul>
-            <li>Our Story</li>
-            <li>Blog</li>
-            <li>Careers</li>
-          </ul>
-        </div>
-        <div className={styles.column}>
-          <h4>Follow Us</h4>
-          <div className={styles.socials}>
-            <a href="#"><i className="fa-brands fa-instagram"></i></a>
-            <a href="#"><i className="fa-brands fa-facebook"></i></a>
-            <a href="#"><i className="fa-brands fa-x-twitter"></i></a>
-          </div>
         </div>
       </div>
+
+      {/* Footer Bottom */}
       <div className={styles.bottom}>
-        © 2025 Amrutam. All rights reserved.
+        © {year} Amrutam. All rights reserved.
       </div>
     </motion.footer>
   );
 };
 
-export default Footer;
+export default memo(Footer);
