@@ -100,6 +100,6 @@ Watch my **3–5 min YouTube walkthrough** here: https://www.youtube.com/watch?v
 
 ## 📧 Contact
 **Divya Deept Pandey**  
-Email: [your.email@example.com]  
-GitHub: [https://github.com/DivyaDeeptPandey](https://github.com/DivyaDeeptPandey)  
-LinkedIn: [Your LinkedIn Link]
+Email: divyadeeptpandey@gmail.com  
+GitHub: https://github.com/DivyaDeeptPandey
+LinkedIn: https://www.linkedin.com/in/divya-deept-pandey-51a1151ba
