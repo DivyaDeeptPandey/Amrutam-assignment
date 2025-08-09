@@ -94,7 +94,7 @@ The project is SEO-optimized, mobile-friendly, and follows a clean, modular code
 ---
 
 ## 📽️ Demo Video
-Watch my **3–5 min YouTube walkthrough** here: [YouTube Link]
+Watch my **3–5 min YouTube walkthrough** here: https://www.youtube.com/watch?v=hWmMPWqvNZU
 
 ---
 
