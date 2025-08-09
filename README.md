@@ -90,11 +90,7 @@ The project is SEO-optimized, mobile-friendly, and follows a clean, modular code
 
 ## 🌐 Live Demo Links
 
-- **Frontend (Vercel):** [Your Live Link]
-- **Backend API (Render/Railway):** [Your Live Link]
-- **YouTube Walkthrough:** [Your Video Link]
-- **GitHub Repo:** https://github.com/DivyaDeeptPandey/Amrutam-assignment
-
+- **Frontend (Vercel):** https://amrutam-assignment-d7p8.vercel.app
 ---
 
 ## 📽️ Demo Video
