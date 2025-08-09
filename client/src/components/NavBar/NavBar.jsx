@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
-import styles from './Navbar.module.css';
+import styles from './NavBar.module.css';
 
 const navItems = [
   { name: 'Home', to: '/' },
