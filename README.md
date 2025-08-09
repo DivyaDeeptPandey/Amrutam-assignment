@@ -1,67 +1,109 @@
-🌿 Amrutam Assignment – Consumer Portal
+# Amrutam Consumer Flow – Full-Stack Assignment
 
-Hi! I'm Divya, and this is my submission for the Full-stack Developer assignment at Amrutam. I chose to build the Consumer Portal because I love crafting intuitive user experiences and solving real-world problems through clean, scalable code.
+## 📌 Project Overview
+This is my submission for the **Amrutam Full-Stack Developer Assignment**.  
+I have implemented the **Consumer Flow** from the provided Figma design, building **10 fully responsive pages** in React.js, along with a backend built using **Node.js + Express + MongoDB**.  
+The project is SEO-optimized, mobile-friendly, and follows a clean, modular code structure.
 
-This project reflects my passion for both frontend polish and backend architecture — from animated product cards to secure authentication and order flows.
+---
 
-🔗 Demo & Walkthrough
+## 🚀 Tech Stack
 
-- Live Site: [Hosted Frontend](#)
-- Backend API: [Hosted Server](#)
-- Video Walkthrough: [YouTube Demo](#)
+### Frontend
+- React.js (Vite)
+- Framer Motion (Animations)
+- CSS Modules (Custom styling)
+- Axios (API calls)
 
-🛠️ Tech Stack
+### Backend
+- Node.js + Express
+- MongoDB (via Mongoose)
+- JWT Authentication
+- CORS Enabled
 
-- Frontend: React.js, React Router, Framer Motion, CSS Modules
-- Backend: Node.js, Express.js, MongoDB, Mongoose, JWT
-- Tools: Postman, DevTools, GitHub
+---
 
-✨ What I Built
+## 📄 Features Implemented
 
-- 🔐 Authentication: Login, Signup, protected routes using JWT
-- 🛒 Product Listing: Category filtering, sorting, responsive grid
-- 🧾 Cart & Checkout: Add to cart, place orders, route protection
-- 👤 User Profile: View & edit profile with feedback animations
-- 🌟 Visual Polish: Custom product cards, transparent images, branding consistency
-- 📦 Backend APIs: Products, users, orders — with validation and middleware
+- **Fully responsive UI** matching Figma design
+- **10 pages** for Consumer Flow, including:
+  1. Home Page  
+  2. Login Page  
+  3. Signup Page  
+  4. Product Listing Page  
+  5. Product Details Page  
+  6. Cart Page  
+  7. Checkout Page  
+  8. Order Success Page  
+  9. User Profile Page
+  10. Edit Profile Page
 
-📁 Folder Structure
+- **Authentication** (Signup, Login with JWT)
+- **User Details** (Stored in MongoDB with hashed password)
+- **Cart & Order Management** (Stored in MongoDB)
+- **SEO Optimization** with meta tags
+- **Smooth Animations** via Framer Motion
 
-client/
-  └── src/
-      ├── pages/         # Login, Signup, ProductListing, Profile, etc.
-      ├── components/    # Navbar, Footer, ProductCard, etc.
-      ├── context/       # AuthContext
-      └── assets/        # Images and icons
-      └── sections/      # Homepage Sections
+---
 
-server/
-  ├── models/            # User, Product, Order schemas
-  ├── routes/            # API endpoints
-  ├── controllers/       # Business logic
-  └── middleware/        # Auth, error handling
+## ⚙️ Installation & Setup
 
-🚀 How to Run Locally
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/DivyaDeeptPandey/Amrutam-assignment.git
+   cd Amrutam-assignment
+   ```
 
-# Frontend
-cd client
-npm install
-npm start
+2. **Install dependencies**
+   - Frontend:
+     ```bash
+     cd client
+     npm install
+     ```
+   - Backend:
+     ```bash
+     cd ../server
+     npm install
+     ```
 
-# Backend
-cd server
-npm install
-npm run dev
+3. **Set up environment variables**
+   Create a `.env` file inside `server/`:
+   ```
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_secret_key
+   PORT=5000
+   ```
 
-💬 Why This Project Matters to Me
+4. **Run the project locally**
+   - Backend:
+     ```bash
+     cd server
+     npm run dev
+     ```
+   - Frontend:
+     ```bash
+     cd client
+     npm run dev
+     ```
 
-I approached this assignment not just as a checklist, but as a chance to build something I’d be proud to use. I focused on clarity, responsiveness, and user flow — and made sure the backend logic was just as thoughtful.
+---
 
-Every bug I fixed and every animation I added was a little celebration. I hope that comes through when you explore the app.
+## 🌐 Live Demo Links
 
-🙏 Thank You
+- **Frontend (Vercel):** [Your Live Link]
+- **Backend API (Render/Railway):** [Your Live Link]
+- **YouTube Walkthrough:** [Your Video Link]
+- **GitHub Repo:** https://github.com/DivyaDeeptPandey/Amrutam-assignment
 
-Thank you for the opportunity to work on something meaningful. I’m excited about the possibility of joining a team that values wellness, creativity, and thoughtful technology.
+---
 
-Warmly,  
-Divya
+## 📽️ Demo Video
+Watch my **3–5 min YouTube walkthrough** here: [YouTube Link]
+
+---
+
+## 📧 Contact
+**Divya Deept Pandey**  
+Email: [your.email@example.com]  
+GitHub: [https://github.com/DivyaDeeptPandey](https://github.com/DivyaDeeptPandey)  
+LinkedIn: [Your LinkedIn Link]
